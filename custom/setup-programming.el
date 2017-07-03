@@ -21,6 +21,18 @@
 (setq gdb-many-windows t        ; use gdb-many-windows by default
       gdb-show-main t)          ; Non-nil means display source file containing the main routine at startup
 
+;; Force gdb-mi to not dedicate any windows
+(advice-add 'gdb-display-buffer
+	    :around (lambda (orig-fun &rest r)
+		      (let ((window (apply orig-fun r)))
+			(set-window-dedicated-p window nil)
+			window)))
+
+(advice-add 'gdb-set-window-buffer
+	    :around (lambda (orig-fun name &optional ignore-dedicated window)
+		      (funcall orig-fun name ignore-dedicated window)
+		      (set-window-dedicated-p window nil)))
+	  
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; GROUP: Programming -> Tools -> Compilation ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

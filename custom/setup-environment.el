@@ -80,4 +80,7 @@
                                    "IELM"
                                    "eshell-mode" "dired-mode"))
 
+;(setq golden-ratio-adjust-factor .8
+;      golden-ratio-wide-adjust-factor .8)
+								   
 (golden-ratio-mode)
